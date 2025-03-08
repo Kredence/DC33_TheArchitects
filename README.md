@@ -1,6 +1,7 @@
 # DC33_Architects
 
 The Architects from Beyond: The True Origins of the Illuminati Party
+
 Long before the first lock was picked, before firewalls and exploits, before secrecy became an art—there was them. They did not arrive with fanfare, nor did they seek dominion. They came as silent architects, unseen engineers of knowledge, threading their influence through the fabric of history itself.
 
 They found early humanity lost in the dark, grasping at mysteries beyond its reach. And so, they offered the first great gift—not of weapons, not of wealth, but of understanding. They whispered the first encryptions to wandering mystics, showed the earliest builders how to shape the world with precision, and passed to the cleverest minds the art of seeing patterns where others saw chaos. These chosen few would become the first stewards of knowledge, entrusted with a task greater than they could comprehend.
