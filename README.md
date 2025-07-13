@@ -1,4 +1,4 @@
-# DC33_Architects
+# DC33_TheArchitects
 
 The Architects from Beyond: The True Origins of the Illuminati Party
 
