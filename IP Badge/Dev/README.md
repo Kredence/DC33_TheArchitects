@@ -1,4 +1,4 @@
-# DC Badge Project (Work in Progress)
+# IP Badge (Work in Progress)
 
 This repository contains firmware for a custom RP2040-Zero badge designed for conferences and interactive events. It features a 286x78 ST7789P3 display, 83 WS2812B LEDs, external W25Q flash, and APS6406L PSRAM. The firmware is written in MicroPython with modular support for display and lighting patterns because I yearn for pain.
 
@@ -7,7 +7,9 @@ This repository contains firmware for a custom RP2040-Zero badge designed for co
 ## Status
 
 **This project is currently under active development.**  
-Expect incomplete features, changing configurations, and iterative updates. Contributions and testing are welcome.
+Expect incomplete features, changing configurations, and all that. Contributions and testing are welcome.
+
+Please be kind, this is my first swing at as project of this size :)
 
 ---
 
