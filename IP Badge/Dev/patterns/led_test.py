@@ -1,13 +1,16 @@
 from machine import Pin
 import neopixel
 from time import sleep
-from config import LED_PIN, LED_COUNT, BRIGHTNESS
-from patterns.led_map import (
-    left_sky, right_sky, beam, bottom, triangle_upper_mid,
-    triangle_center_ring, triangle_lower_mid, triangle_left, triangle_right,
-    triangle_lower, triangle_tip, triangle_bottom_wings, triangle,
-    sky, all_leds,eye
-)
+import random
+from config import LED_PIN, LED_COUNT, BRIGHTNESS, THEME_PALETTE_NAME
+import patterns.led_map as led_map
+from fonts.palettes import PALETTES
+
+# Set to True if you want randmo colors
+use_random_colors = False
+
+# Get the current theme palette from config
+theme_palette = PALETTES.get(THEME_PALETTE_NAME, [(255, 255, 0)])
 
 # Set up NeoPixel strip
 np = neopixel.NeoPixel(Pin(LED_PIN), LED_COUNT)
@@ -32,33 +35,29 @@ def show_section(led_indexes, color, label):
     print(f"Testing section: {label}")
     np.fill((0, 0, 0))
     for i in led_indexes:
-        if i < LED_COUNT:
+        if isinstance(i, int) and 0 <= i < LED_COUNT:
             np[i] = scale_color(color)
     np.write()
-    sleep(5)
+    sleep(3)
     fade_out()
 
-# List of (name, section, color)
-sections = [
-    ("left_sky", left_sky, (255, 0, 0)),
-    ("right_sky", right_sky, (0, 255, 0)),
-    ("beam", beam, (0, 0, 255)),
-    ("bottom", bottom, (255, 255, 0)),
-    ("triangle_upper_mid", triangle_upper_mid, (255, 0, 255)),
-    ("triangle_center_ring", triangle_center_ring, (0, 255, 255)),
-    # ("triangle_lower_mid", triangle_lower_mid, (255, 128, 0)),
-    # ("triangle_left", triangle_left, (128, 0, 255)),
-    # ("triangle", triangle, (0, 128, 255)),
-    # ("mid_center", mid_center, (128, 255, 0)),
-    # ("bottom_center", bottom_center, (255, 0, 128)),
-    ("eye", eye, (255, 255, 255)),
-    # ("bottom_skull", bottom_skull, (100, 100, 100)),
-    # ("sky", sky, (0, 128, 128)),
-    # ("all_leds", all_leds, (32, 32, 32)),
-]
+# Automatically detect all list-type LED sections from led_map
+def get_all_sections():
+    section_list = []
+    for name in dir(led_map):
+        if name.startswith("__"):
+            continue
+        section = getattr(led_map, name)
+        if isinstance(section, list) and all(isinstance(i, int) for i in section):
+            if use_random_colors:
+                color = tuple(random.randint(64, 255) for _ in range(3))
+            else:
+                color = random.choice(theme_palette)
+            section_list.append((name, section, color))
+    return section_list
 
 def run():
-    # Run through all sections
+    sections = get_all_sections()
     for name, section, color in sections:
         show_section(section, color, name)
 

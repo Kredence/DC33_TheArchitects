@@ -156,3 +156,6 @@ async def run():
     await boot_flash_async()
     draw_handle(lines, scale, char_w, char_h, padding)
     await asyncio.sleep(1)
+
+if __name__ == "__main__":
+    run()

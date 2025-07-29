@@ -1,29 +1,27 @@
-# Not 100% sure this is accurate but I'm tired
+# Not 100% sure this is accurate but I'm tired, numbering starts a zero
 # Individual sections
-left_sky = [0, 1, 2, 3, 4, 5, 6]
-right_sky = [59, 60, 61, 62, 63, 64, 65, 66]
+left_sky = [0, 1, 2, 3, 4, 5, 6] # AKA left glitch
+right_sky = [59, 60, 61, 62, 63, 64, 65, 66] # AKA right glitch
 bottom = [67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82]
+beam = [7, 8, 9, 10, 11, 12] # This is from the UFO to the top of the pyramid
+eye = [27,28,29]
+skull = [53]
 
-beam = [7, 8, 9, 10, 11, 12]
-eye = [25,26,27]
-triangle_upper_mid = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-triangle_center_ring = [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
-triangle_lower_mid = [30, 31, 32, 33, 34, 35, 36, 37]
-triangle_left = [38, 39, 40, 41, 42, 43]
-triangle_right = [44, 45, 46, 47, 48, 49]
-triangle_lower = [50, 51, 52, 53, 54, 55, 56, 57]
-triangle_tip = [58]
-triangle_bottom_wings = [59, 60, 61]
+# Triangle sections
+triangle_center_tip = [13, 14, 17] # Very top center of pyramid
+triangle_eye_ring = [19,22,24,32,34,37,43,52,51,55] # the diamond shape around eye, extends to bottom of triangle
+triangle_left_outter = [15,18,21,25,26,34,35,46,47,48]
+triangle_left_inner = [36,41,42,49,50]
+triangle_right_outter = [16,20,24,30,31,39,40,57,58,59]
+triangle_right_inner = [38,44,45,54,57]
 
-# Combined groups
-triangle = (
-    triangle_upper_mid + triangle_center_ring +
-    triangle_lower_mid + triangle_left + triangle_right +
-    triangle_lower + triangle_tip + triangle_bottom_wings
+triangle = (triangle_center_tip + triangle_eye_ring + 
+                 triangle_left_outter + triangle_left_inner +
+                 triangle_right_inner + triangle_right_outter
 )
 
 sky = left_sky + right_sky
-full = left_sky + right_sky + triangle + bottom
+full = left_sky + right_sky + eye + skull + bottom + triangle
 
 # All LEDs
 all_leds = list(range(83))
