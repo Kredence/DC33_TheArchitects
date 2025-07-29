@@ -37,12 +37,11 @@ You can upload all firmware files from the `/Dev` folder using either:
 
 ### Option A: Visual Studio Code with MicroPico
 
-1. Install the **MicroPico** extension in VSCode.
-2. Open the project directory that contains the `Dev/` folder and initialize in MicroPico.
-3. It should pick these up automatically but if not, configure MicroPico for:
-   - Board type: *RP2040 / Pico*
-   - Serial port: *your board’s COM port*
-4. Use the “Upload All Files” or “Sync Folder” command to copy the contents of `Dev/` to the badge.
+1. Install VSCode
+2. Install the **MicroPico** extension in VSCode.
+3. Open the `/Dev` project folder **if you upload the whole IP/Dev folder, the badge won't boot**
+4. Select `Initialize MicroPico Project` from the MicroPico menu (CTRL+Shift+P to open the command palette)
+3. Use the “Upload All Files” or “Sync Folder” command to copy the contents of `Dev/` to the badge.
 
 ### Option B: Thonny IDE
 
