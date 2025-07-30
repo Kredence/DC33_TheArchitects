@@ -39,6 +39,7 @@ You can upload all firmware files from the `/Dev` folder using either:
 
 1. Install VSCode
 2. Install the **MicroPico** extension in VSCode.
+
    <img width="482" height="250" alt="image" src="https://github.com/user-attachments/assets/7f62ee23-511c-4545-8fb1-d48c4edb95df" />
 3. Open the `/Dev` project folder **if you upload the whole IP/Dev folder, the badge won't boot**
 4. Select `Initialize MicroPico Project` from the MicroPico menu (CTRL+Shift+P to open the command palette)
