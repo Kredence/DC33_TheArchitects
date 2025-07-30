@@ -19,7 +19,9 @@ display = st7789_ext.ST7789(
     dc=Pin(4, Pin.OUT),
     cs=Pin(5, Pin.OUT)
 )
+
 display.init(landscape=True, mirror_y=False, mirror_x=True, inversion=False, xstart=18, ystart=82)
+display.fill(display.color(0, 0, 0))  # Prevent white flash
 
 # --- Backlight Fade-In ---
 pwm = PWM(Pin(2))
@@ -158,4 +160,4 @@ async def run():
     await asyncio.sleep(1)
 
 if __name__ == "__main__":
-    run()
+    asyncio.run(run())

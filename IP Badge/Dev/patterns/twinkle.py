@@ -71,6 +71,37 @@ async def final_fade_out():
     np.fill((0, 0, 0))
     np.write()
 
+async def twinkle_loop(
+    cycle_delay=0.1,
+    simultaneous=2,
+    section="all_leds",
+    randomize_speed=True,
+    color_ramp=False,
+    fade_steps=5,
+):
+    led_group = getattr(led_map, section, led_map.all_leds)
+    ramp_index = 0
+
+    while True:
+        tasks = []
+        for _ in range(simultaneous):
+            i = random.choice(led_group)
+
+            color = (
+                THEME_PALETTE[ramp_index % len(THEME_PALETTE)]
+                if color_ramp else random.choice(THEME_PALETTE)
+            )
+            ramp_index += 1
+
+            spd = 0.03
+            if randomize_speed:
+                spd += urandom.getrandbits(4) * 0.002
+
+            tasks.append(fade_pixel(i, color, steps=fade_steps, speed=spd))
+
+        await asyncio.gather(*tasks)
+        await asyncio.sleep(cycle_delay)
+
 # test
 if __name__ == "__main__":
     asyncio.run(twinkle(

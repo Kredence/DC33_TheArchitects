@@ -1,7 +1,7 @@
 # config.py
 LED_PIN = 8
 LED_COUNT = 83
-BRIGHTNESS = 0.1 # This is specific to the LEDs, NOT the display backlighting
+BRIGHTNESS = 0.5 # This is specific to the LEDs, NOT the display backlighting
 THEME_COLOR = (255, 251, 0)
 SETTINGS_FILE = "hacker_handle.json"
 DEFAULT_HANDLE = "Illuminati Party"

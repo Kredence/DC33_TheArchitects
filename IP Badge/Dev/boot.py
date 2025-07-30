@@ -4,10 +4,12 @@
 from machine import SPI, Pin
 import os
 from lib.winbond import W25QFlash, version
+from lib.utils import boot_flash_led
 
-os_info = os.uname()
-print('MicroPython infos: {}'.format(os_info))
-print('Used micropthon-winbond version: {}'.format(version.__version__))
+# Uncomment this if you want version info
+# os_info = os.uname()
+# print('MicroPython infos: {}'.format(os_info))
+# print('Used micropthon-winbond version: {}'.format(version.__version__))
 
 # Pin assignments
 SPI_ID = 1  # Change as appropriate for your board
@@ -16,45 +18,41 @@ CS_PIN = Pin(13, Pin.OUT)
 
 flash = W25QFlash(spi=spi, cs=CS_PIN, baud=2000000, software_reset=True)
 
-# get Flash infos/properties
-print("Flash manufacturer ID: 0x{0:02x}".format(flash.manufacturer))
-print("Flash Memory Type: {}".format(flash.mem_type))
-print("Flash Device Type: 0x{0:02x}".format(flash.device))
-print("Flash size: {} bytes".format(flash.capacity))
+# # get Flash infos/properties
+# print("Flash manufacturer ID: 0x{0:02x}".format(flash.manufacturer))
+# print("Flash Memory Type: {}".format(flash.mem_type))
+# print("Flash Device Type: 0x{0:02x}".format(flash.device))
+# print("Flash size: {} bytes".format(flash.capacity))
 
-flash_mount_point = '/external'
+mount_point = '/external'
+animations_dir = mount_point + "/animations"
 
-try:
-    print('Mounting the external flash to "{}" ...'.format(flash_mount_point))
-    os.mount(flash, flash_mount_point)
-    print('External flash mounted to "{}"'.format(flash_mount_point))
-except Exception as e:
-    print('Failed to mount the external flash due to: {}'.format(e))
-
-    if e.errno == 19:
-        # [Errno 19] ENODEV aka "No such device"
-        # create the filesystem, this takes some seconds (approx. 10 sec)
-        print('Creating filesystem for external flash ...')
-        print('This might take up to 10 seconds')
-        os.VfsFat.mkfs(flash)
-        print('Filesystem for external flash created')
-    else:
-        # takes some seconds/minutes (approx. 40 sec for 128MBit/16MB)
-        print('Formatting external flash ...')
-        print('This might take up to 60 seconds')
-        # !!! only required on the very first start (will remove everything)
+# --- Mount Flash if not already mounted ---
+if 'external' not in os.listdir("/"):
+    try:
+        os.mount(flash, mount_point)
+        print("Flash mounted successfully at", mount_point)
+    except Exception as e:
+        print("Mount failed:", e)
+        print("Formatting flash, please wait...")
         flash.format()
-        print('External flash formatted')
-
-        # create the filesystem, this takes some seconds (approx. 10 sec)
-        print('Creating filesystem for external flash ...')
-        print('This might take up to 10 seconds')
-        # !!! only required on first setup and after formatting
         os.VfsFat.mkfs(flash)
-        print('Filesystem for external flash created')
+        os.mount(flash, mount_point)
+        print("Flash formatted and mounted at", mount_point)
+else:
+    print("Flash already mounted at", mount_point)
 
-    # finally mount the external flash
-    os.mount(flash, flash_mount_point)
-    print('External flash mounted to "{}"'.format(flash_mount_point))
+# --- Show available space ---
+fs_stat = os.statvfs(mount_point)
+free_bytes = fs_stat[0] * fs_stat[3]
+print("Free space on flash: {:.2f} KB".format(free_bytes / 1024))
 
-print('boot.py steps completed')
+# --- Ensure 'animations' directory exists ---
+if "animations" not in os.listdir(mount_point):
+    try:
+        os.mkdir(animations_dir)
+        print("Created directory:", animations_dir)
+    except Exception as e:
+        print("Failed to create animations directory:", e)
+else:
+    print("'animations' folder already exists")
