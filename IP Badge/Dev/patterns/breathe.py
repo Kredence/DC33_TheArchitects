@@ -126,11 +126,11 @@ async def final_fade_out():
     np.fill((0, 0, 0))
     np.write()
 
-# test
+# # test
 if __name__ == "__main__":
     asyncio.run(breathe(
         section="all",
-        loop_count=5,
+        loop_count=1,
         simultaneous=5,
         color_ramp=True,
         randomize_speed=True,

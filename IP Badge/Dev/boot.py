@@ -56,3 +56,5 @@ if "animations" not in os.listdir(mount_point):
         print("Failed to create animations directory:", e)
 else:
     print("'animations' folder already exists")
+
+boot_flash_led() # sanity check onboard LED

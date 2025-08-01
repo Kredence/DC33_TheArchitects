@@ -1,34 +1,16 @@
 import time, json, random
 import uasyncio as asyncio
-from machine import Pin, SPI, PWM
-from lib import st7789_ext
 from config import DEFAULT_HANDLE, SETTINGS_FILE, SCREEN_WIDTH, SCREEN_HEIGHT, BL_BRIGHTNESS, FONT_COLOR
 from fonts.palettes import PALETTES
+from lib.display import init_display  # Import initializer
 
+# Globals
+display = None
 FONT_PALETTE = PALETTES.get(FONT_COLOR, PALETTES[FONT_COLOR])
 
 def random_font_color():
     r, g, b = random.choice(FONT_PALETTE)
     return display.color(r, g, b)
-
-# --- Display Setup ---
-display = st7789_ext.ST7789(
-    SPI(0, baudrate=40000000, phase=1, polarity=1, sck=Pin(6), mosi=Pin(7)),
-    SCREEN_WIDTH, SCREEN_HEIGHT,
-    reset=Pin(3, Pin.OUT),
-    dc=Pin(4, Pin.OUT),
-    cs=Pin(5, Pin.OUT)
-)
-
-display.init(landscape=True, mirror_y=False, mirror_x=True, inversion=False, xstart=18, ystart=82)
-display.fill(display.color(0, 0, 0))  # Prevent white flash
-
-# --- Backlight Fade-In ---
-pwm = PWM(Pin(2))
-pwm.freq(1000)
-for level in range(0, BL_BRIGHTNESS + 1000, 1000):
-    pwm.duty_u16(min(level, BL_BRIGHTNESS))
-    time.sleep(0.01)
 
 # --- Handle Loading ---
 def get_handle():
@@ -148,16 +130,32 @@ async def boot_glitch_static_async(duration=2, flash=True):
         await asyncio.sleep(0.08)
         display.fill(display.color(0, 0, 0))
 
-# --- Main Entry Point ---
+async def fade_off():
+    from lib.display import pwm  # Ensure we get the initialized global
+    for level in reversed(range(0, BL_BRIGHTNESS + 1000, 1000)):
+        pwm.duty_u16(min(level, BL_BRIGHTNESS))
+        await asyncio.sleep(0.01)
+    display.fill(display.color(0, 0, 0))
+
+# Run fun
 async def run():
-    handle = get_handle()
-    lines, scale, char_w, char_h, padding = compute_best_layout(handle)
+    global display
+    display = init_display()
 
-    await boot_glitch_static_async()
-    await glitch_text_resolve_async(lines, scale, char_w, char_h, padding, duration=4)
-    await boot_flash_async()
-    draw_handle(lines, scale, char_w, char_h, padding)
-    await asyncio.sleep(1)
+    try:
+        handle = get_handle()
+        lines, scale, char_w, char_h, padding = compute_best_layout(handle)
 
+        await boot_glitch_static_async()
+        await glitch_text_resolve_async(lines, scale, char_w, char_h, padding, duration=4)
+        await boot_flash_async()
+        draw_handle(lines, scale, char_w, char_h, padding)
+        await asyncio.sleep(4)
+        await fade_off()
+
+    except Exception as e:
+        print("[Display] Error:", e)
+
+# Optional: standalone test
 if __name__ == "__main__":
     asyncio.run(run())
