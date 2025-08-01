@@ -41,15 +41,17 @@ You can upload all firmware files from the `/Dev` folder using either:
 2. Install the **MicroPico** extension in VSCode.
 
    <img width="482" height="250" alt="image" src="https://github.com/user-attachments/assets/7f62ee23-511c-4545-8fb1-d48c4edb95df" />
-3. Open the `/Dev` project folder **if you upload the whole IP/Dev folder, the badge won't boot**
-4. Select `Initialize MicroPico Project` from the MicroPico menu (CTRL+Shift+P to open the command palette)
-3. Use the “Upload All Files” or “Sync Folder” command to copy the contents of `Dev/` to the badge.
+3. Clone this repo by downloading it as a .zip and extract the files or use `git clone`
+4. Open the `/Dev` project folder **if you upload the whole IP/Dev folder, the badge won't boot**
+5. Select `Initialize MicroPico Project` from the MicroPico menu (CTRL+Shift+P to open the command palette)
+6. Use the “Upload All Files” or “Sync Folder” command to copy the contents of `Dev/` to the badge.
 
 ### Option B: Thonny IDE
 
 1. Open Thonny and configure the interpreter:
    - `Tools → Options → Interpreter → MicroPython (Raspberry Pi Pico) COMX`
-2. Open the `Dev/` folder in Thonny.
+2. Clone this repo by downloading it as a .zip and extract the files or use `git clone`
+3. Open the `Dev/` folder in Thonny.
 3. Select all files and upload them to the board:
    - Right-click → `Upload to /`
 
