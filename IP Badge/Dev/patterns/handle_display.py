@@ -13,7 +13,18 @@ def random_font_color():
     return display.color(r, g, b)
 
 # --- Handle Loading ---
-def get_handle():
+# def get_handle():
+#     try:
+#         with open(SETTINGS_FILE, "r") as f:
+#             return json.load(f).get("handle", DEFAULT_HANDLE)
+#     except Exception:
+#         return DEFAULT_HANDLE
+
+### ======
+
+def get_handle(force_default_chance=0.25):
+    if random.random() < force_default_chance:
+        return DEFAULT_HANDLE
     try:
         with open(SETTINGS_FILE, "r") as f:
             return json.load(f).get("handle", DEFAULT_HANDLE)
@@ -130,12 +141,56 @@ async def boot_glitch_static_async(duration=2, flash=True):
         await asyncio.sleep(0.08)
         display.fill(display.color(0, 0, 0))
 
+# Dim down the display to avoid it appearing "on" after run
 async def fade_off():
     from lib.display import pwm  # Ensure we get the initialized global
     for level in reversed(range(0, BL_BRIGHTNESS + 1000, 1000)):
         pwm.duty_u16(min(level, BL_BRIGHTNESS))
         await asyncio.sleep(0.01)
     display.fill(display.color(0, 0, 0))
+
+###############################################################
+
+async def wave_distortion_async(duration=2):
+    t_start = time.ticks_ms()
+    colors = [(255, 251, 0), (200, 200, 200), (100, 100, 100)]
+
+    while time.ticks_diff(time.ticks_ms(), t_start) < int(duration * 1000):
+        display.fill(display.color(0, 0, 0))
+        for y_offset in range(0, SCREEN_HEIGHT, 6):
+            amplitude = random.randint(-5, 5)
+            wave_color = display.color(*random.choice(colors))
+            display.rect((SCREEN_WIDTH // 2) + amplitude, y_offset, SCREEN_WIDTH // 2, 3, wave_color, fill=True)
+        await asyncio.sleep(0.04)
+
+async def color_scanline_flicker_async(duration=1.5, palette=None, min_delay=0.005, max_delay=0.03):
+    """
+    Glitchy horizontal scanline flicker using a color palette.
+
+    Args:
+        duration (float): how long the flicker should run.
+        palette (list): list of (r, g, b) tuples. Falls back to grayscale glitchy tones.
+        min_delay (float): shortest time between flickers.
+        max_delay (float): longest time between flickers.
+    """
+    if palette is None:
+        palette = [
+            (255, 255, 255),  # white
+            (192, 192, 192),  # light gray
+            (255, 251, 0),    # IP_GOLD-style yellow
+            (0, 0, 0),        # black for ghost lines
+            (212, 175, 55),   # gold
+        ]
+
+    t_start = time.ticks_ms()
+    while time.ticks_diff(time.ticks_ms(), t_start) < int(duration * 1000):
+        y = random.randint(0, SCREEN_HEIGHT - 1)
+        h = random.randint(1, 3)  # line thickness
+        color = display.color(*random.choice(palette))
+        display.rect(0, y, SCREEN_WIDTH, h, color, fill=True)
+        await asyncio.sleep(random.uniform(min_delay, max_delay))
+
+###############################################################
 
 # Run fun
 async def run():
@@ -149,8 +204,10 @@ async def run():
         await boot_glitch_static_async()
         await glitch_text_resolve_async(lines, scale, char_w, char_h, padding, duration=4)
         await boot_flash_async()
+        # await wave_distortion_async() # not sure I'm gonna use this
         draw_handle(lines, scale, char_w, char_h, padding)
         await asyncio.sleep(4)
+        await color_scanline_flicker_async(duration=2, palette=PALETTES["FONT_ALIEN_GREEN"])
         await fade_off()
 
     except Exception as e:

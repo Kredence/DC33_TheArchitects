@@ -87,15 +87,31 @@ IP_GOLD = [
 
 # --- Font-safe RGB versions for Display ---
 FONT_ALIEN_GREEN = [
-    (0, 255, 64), (0, 200, 40), (64, 255, 128),
-    (0, 255, 0), (32, 255, 96), (0, 180, 60),
-    (80, 255, 60), (16, 240, 100), (80, 0, 160), (0, 48, 255),
+    (180, 255, 180),   # radioactive mint
+    (192, 255, 64),    # neon chartreuse
+    (255, 255, 255),   # white-hot flash
+    (128, 255, 128),   # searing lime
+    (200, 255, 100),   # lemon-lime laser
+    (150, 255, 150),   # soft green-white
+    (255, 255, 128),   # LED yellow burst
+    (220, 255, 200),   # pastel overload
+    (255, 100, 255),   # pink-violet pulse
+    (160, 240, 255),   # cyan glitch
 ]
 
 FONT_DARK_ALIEN_GREEN = [
-    (0, 40, 10), (8, 32, 16), (0, 24, 12),
-    (12, 36, 20), (4, 28, 14), (0, 20, 10),
-    (6, 18, 12), (16, 48, 24), (24, 60, 30), (12, 44, 22), (20, 50, 10), (10, 38, 18),
+    (120, 180, 120),   # dark lime mist
+    (140, 200, 100),   # jade fog
+    (110, 180, 110),   # moss plasma
+    (100, 160, 140),   # sea glitch
+    (150, 220, 100),   # forest flash
+    (130, 200, 130),   # muted bright green
+    (160, 230, 160),   # ghost vine
+    (180, 240, 180),   # bright mist
+    (200, 255, 200),   # plasma fade
+    (180, 255, 150),   # lemon fade
+    (255, 255, 160),   # glare wash
+    (200, 255, 120),   # jungle static
 ]
 
 FONT_CYBERPUNK_VIOLET = [
