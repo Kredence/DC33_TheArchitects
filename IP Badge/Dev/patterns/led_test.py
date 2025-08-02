@@ -1,3 +1,5 @@
+# Runs a light test for each section
+
 from machine import Pin
 import neopixel
 from time import sleep

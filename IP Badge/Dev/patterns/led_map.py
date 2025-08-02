@@ -13,9 +13,9 @@ triangle_eye_ring = [19,22,23,32,33,37,43,51,52,55] # the diamond shape around e
 triangle_left_outter = [15,18,21,25,26,34,35,46,47,48]
 triangle_left_inner = [36,41,42,49,50]
 triangle_right_outter = [16,20,24,30,31,39,40,57,58,59]
-triangle_right_inner = [38,44,45,54,57]
+triangle_right_inner = [38,44,45,54,56]
 
-triangle = (triangle_center_tip + triangle_eye_ring + 
+triangle = (triangle_center_tip + triangle_eye_ring + eye +
                  triangle_left_outter + triangle_left_inner +
                  triangle_right_inner + triangle_right_outter
 )

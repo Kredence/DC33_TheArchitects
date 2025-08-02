@@ -1,3 +1,5 @@
+# This runs through each LED by number starting at zero
+
 from time import sleep
 import neopixel
 from machine import Pin

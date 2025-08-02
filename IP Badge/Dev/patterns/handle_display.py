@@ -12,16 +12,6 @@ def random_font_color():
     r, g, b = random.choice(FONT_PALETTE)
     return display.color(r, g, b)
 
-# --- Handle Loading ---
-# def get_handle():
-#     try:
-#         with open(SETTINGS_FILE, "r") as f:
-#             return json.load(f).get("handle", DEFAULT_HANDLE)
-#     except Exception:
-#         return DEFAULT_HANDLE
-
-### ======
-
 def get_handle(force_default_chance=0.25):
     if random.random() < force_default_chance:
         return DEFAULT_HANDLE

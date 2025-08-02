@@ -3,7 +3,9 @@ import random
 from patterns import handle_display,breathe, twinkle, chase, gif_player
 from patterns.handle_display import run as display_run
 from lib import utils
-from config import GIF_FOLDER
+# from config import GIF_FOLDER
+from menu import run_menu
+from patterns.gif_player import run_gif
 
 # Run on boot
 # menu.main() # Gives a time-based menu for the user to set handle - this needs a way to gracefully exit
@@ -16,13 +18,13 @@ from config import GIF_FOLDER
 async def display_loop():
     while True:
         try:
-            print("[Main] Starting display animation")
+            # print("[Main] Starting display animation")
             await display_run()
         except Exception as e:
             print("[Main] Display task failed:", e)
 
         delay = random.randint(10, 30)
-        print(f"[Main] Next display run in {delay} seconds")
+        # print(f"[Main] Next display run in {delay} seconds")
         await asyncio.sleep(delay)
 
 # Sets what light patterns are running
@@ -37,16 +39,22 @@ async def run_lighting_loop():
 #     await asyncio.sleep(3)
     # await gif_player.(folder=GIF_FOLDER, loop_count=3, fade_on_done=True)
 
-# Troublehsooting
-async def heartbeat():
+async def run_gif_loop():
     while True:
-        print("Heartbeat: Event loop is alive")
-        await asyncio.sleep(2)
+        await run_gif()
+        await asyncio.sleep(random.randint(20, 40))
+
+# Troublehsooting
+# async def heartbeat():
+#     while True:
+#         print("Heartbeat: Event loop is alive")
+#         await asyncio.sleep(2)
 
 async def main():
     await asyncio.gather(
         display_loop(),
         run_lighting_loop(),
+        run_menu(),
         # run_gif_loop()
     )
 
