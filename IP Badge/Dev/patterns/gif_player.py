@@ -101,6 +101,7 @@ async def play_565_animation(folder):
     frame_paths = discover_frame_paths(folder)
     if not frame_paths:
         print("No valid frames found.")
+        await fade_display_off()
         return
 
     await fade_display_on()
@@ -113,11 +114,11 @@ async def play_565_animation(folder):
     await fade_display_off()
 
 # --- Entry Point ---
-async def gif_runner(folder="/external/animations/hackers1"):
+async def gif_runner(folder="/external/animations/messwiththebest"):
     global display
     display = init_display()
     await play_565_animation(folder)
 
 # --- Test Hook ---
 if __name__ == "__main__":
-    asyncio.run(gif_runner("/external/animations/hackers2"))
+    asyncio.run(gif_runner("/external/animations/allyourbases"))
