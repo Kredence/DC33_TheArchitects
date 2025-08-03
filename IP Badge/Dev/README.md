@@ -49,7 +49,7 @@ You can upload all firmware files from the `/Dev` folder using either:
 
 ### Option B: Thonny IDE
 
-1. Open Thonny and configure the interpreter:
+1. Open [Thonny](https://thonny.org/) and configure the interpreter:
    - `Tools → Options → Interpreter → MicroPython (Raspberry Pi Pico) COMX`
 2. Clone this repo by downloading it as a .zip and extract the files or use `git clone`
 3. Open the `Dev/` folder in Thonny.
