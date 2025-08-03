@@ -42,9 +42,10 @@ You can upload all firmware files from the `/Dev` folder using either:
 
    <img width="482" height="250" alt="image" src="https://github.com/user-attachments/assets/7f62ee23-511c-4545-8fb1-d48c4edb95df" />
 3. Clone this repo by downloading it as a .zip and extract the files or use `git clone`
-4. Open the `/Dev` project folder **if you upload the whole IP/Dev folder, the badge won't boot**
-5. Select `Initialize MicroPico Project` from the MicroPico menu (CTRL+Shift+P to open the command palette)
-6. Use the “Upload All Files” or “Sync Folder” command to copy the contents of `Dev/` to the badge.
+   [GitHub Repository Extension](https://learn.microsoft.com/en-us/azure/developer/javascript/how-to/with-visual-studio-code/clone-github-repository?tabs=activity-bar)
+5. Open the `/Dev` project folder **if you upload the whole IP/Dev folder, the badge won't boot**
+6. Select `Initialize MicroPico Project` from the MicroPico menu (CTRL+Shift+P to open the command palette)
+7. Use the “Upload All Files” or “Sync Folder” command to copy the contents of `Dev/` to the badge.
 
 ### Option B: Thonny IDE
 
