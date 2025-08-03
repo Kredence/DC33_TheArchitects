@@ -34,12 +34,25 @@ ASCII_ART = r"""
 # Global reader for input
 sreader = asyncio.StreamReader(sys.stdin)
 
+# BRIGHTNESS_PRESETS = {
+#     "1": ("Default", 0.3),
+#     "2": ("Brighter but not terrible", 0.5),
+#     "3": ("Might need sunglasses", 0.7),
+#     "4": ("MY EYES!", 1.0),
+# }
+
+BRIGHTNESS_PRESETS = [
+    ("Default", 0.3),
+    ("Brighter but not terrible", 0.5),
+    ("Might need sunglasses", 0.7),
+    ("MY EYES!", 1.0),
+]
+
 # --- Async Helpers ---
 async def async_input(prompt=""):
     print(prompt, end="")
     line = await sreader.readline()
     return line.decode().strip()
-
 
 # --- Display ASCII art with scroll ---
 async def scroll_ascii_art(ascii_art):
@@ -65,7 +78,7 @@ async def set_hacker_handle():
         return None
     with open(HANDLE_FILE, "w") as f:
         json.dump({"handle": handle}, f)
-    print("Handle changed to:", handle)
+    print("\nHandle changed to:", handle)
     return handle
 
 # --- Config Updaters ---
@@ -113,26 +126,33 @@ async def set_led_palette():
         print("Invalid choice:", e)
 
 async def set_brightness():
-    val = await async_input("Enter brightness (0.1 to 1.0): ")
-    try:
-        b = float(val)
-        if 0.1 <= b <= 1.0:
-            update_user_settings_field("BRIGHTNESS", str(b))
-        else:
-            print("Out of range.")
-    except:
-        print("Invalid value.")
+    print("\nChoose a brightness level:")
+    for i, (label, _) in enumerate(BRIGHTNESS_PRESETS):
+        print(f"{i+1}. {label}")
+
+    choice = await async_input("Select option: ")
+    if not choice.isdigit():
+        print("Invalid choice.")
+        return
+
+    index = int(choice) - 1
+    if 0 <= index < len(BRIGHTNESS_PRESETS):
+        label, value = BRIGHTNESS_PRESETS[index]
+        update_user_settings_field("BRIGHTNESS", value)
+        print(f"Brightness set to '{label}' ({value}).")
+    else:
+        print("Invalid choice.")
 
 # --- Menu ---
-
 def show_menu():
     print("\nMenu Options:")
     print("1. Show handle")
     print("2. Change handle")
     print("3. Change font palette")
     print("4. Change LED color palette")
-    print("5. Restart to apply changes")
-    print("6. Exit")
+    print("5. Change brightness")
+    print("6. Restart to apply changes")
+    print("7. Exit")
 
 async def run_menu():
     await scroll_ascii_art(ASCII_ART)
@@ -159,17 +179,21 @@ async def run_menu():
             await set_led_palette()
 
         elif choice == '5':
+            await set_brightness()
+
+        elif choice == '6':
             print("Restarting now to apply changes...")
             await asyncio.sleep(1)
             import machine
             machine.reset()
 
-        elif choice == '6':
+        elif choice == '7':
             print("Exiting menu loop. Main app still running.")
             break
 
         else:
             print("Invalid choice. Try again.")
+
 
 # Optional: for direct execution
 if __name__ == "__main__":

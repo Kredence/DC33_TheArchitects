@@ -16,19 +16,25 @@ async def main():
         await wave_fx.wave_fx_runner(
             section="center_w_bottom",direction="top-to-bottom",speed=0.03,mirrored=True,
             theme_palette_name=THEME_PALETTE_NAME, font_color=FONT_COLOR)
-        # await gif_player.gif_runner()
+        await gif_player.gif_runner(folder="/external/animations/hackers2")
+        await asyncio.sleep(0.5)
         await asyncio.sleep(0.5)
         await chase.chase(
             delay=0.01,simultaneous=4,section="sky",direction="bounce",loop_count=2,dual_head=True,color_ramp=True,randomize_speed=False)
+        await asyncio.sleep(0.5)
         await breathe_fx.breathe(
             section="triangle",loop_count=2,simultaneous=5,color_ramp=True,randomize_speed=True,
             min_brightness=0.1,max_brightness=BRIGHTNESS,easing="sine",led_palette_name="NEON_BLUE_TEAL",font_palette_name="FONT_NEON_BLUE_TEAL")
         await asyncio.sleep(0.5)
+        await gif_player.gif_runner(folder="/external/animations/hackers1")
+        await asyncio.sleep(0.5)
         await twinkle.twinkle(count=30,speed=0.03,simultaneous=1,section="bottom",randomize_speed=False,color_ramp=False)
+        await asyncio.sleep(0.5)
         await matrix_rain.matrix_rain(section="center_beam")
         await asyncio.sleep(0.5)
         await chase.chase(
             delay=0.01,simultaneous=2,section="center_beam",direction="forward",loop_count=2,dual_head=True,color_ramp=True,randomize_speed=False)
+        await asyncio.sleep(0.5)
 
 if __name__ == "__main__":
     asyncio.run(main())

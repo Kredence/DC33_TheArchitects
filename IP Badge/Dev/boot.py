@@ -83,7 +83,7 @@ flash = W25QFlash(spi=spi, cs=CS_PIN, baud=2000000, software_reset=True)
 
 mount_point = '/external'
 animations_dir = mount_point + "/animations"
-subdirs = ["hackers1", "hackers2", "dance"]
+subdirs = ["hackers1", "allyourbases"]
 
 # --- Mount Flash if not already mounted ---
 if 'external' not in os.listdir("/"):

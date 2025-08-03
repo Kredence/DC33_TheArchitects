@@ -36,6 +36,8 @@ try:
         _user_config = json.load(f)
         FONT_COLOR = _clean(_user_config.get("FONT_COLOR"), "FONT_DARK_ALIEN_GREEN")
         THEME_PALETTE_NAME = _clean(_user_config.get("THEME_PALETTE_NAME"), "ALIEN_GREEN")
+        BRIGHTNESS = _clean(_user_config.get("BRIGHTNESS"), 0.3, cast=float)
 except Exception as e:
     FONT_COLOR = "FONT_DARK_ALIEN_GREEN"
     THEME_PALETTE_NAME = "ALIEN_GREEN"
+    BRIGHTNESS = 0.3

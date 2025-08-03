@@ -1,39 +1,3 @@
-# # /patterns/breathe.py
-
-# import uasyncio as asyncio
-# import neopixel
-# from machine import Pin
-# from config import LED_PIN, LED_COUNT, BRIGHTNESS, THEME_COLOR
-
-# np = neopixel.NeoPixel(Pin(LED_PIN), LED_COUNT)
-
-# def set_pixel(i, color, brightness=BRIGHTNESS):
-#     r, g, b = color
-#     np[i] = (int(r * brightness), int(g * brightness), int(b * brightness))
-
-# def fade_out():
-#     for i in range(LED_COUNT):
-#         np[i] = (0, 0, 0)
-#     np.write()
-
-# async def breathe(cycles=3, delay=0.02):
-#     for _ in range(cycles):
-#         for b in range(0, 100, 3):
-#             for i in range(LED_COUNT):
-#                 set_pixel(i, THEME_COLOR, brightness=b / 100)
-#             np.write()
-#             await asyncio.sleep(delay)
-#         for b in range(100, -1, -3):
-#             for i in range(LED_COUNT):
-#                 set_pixel(i, THEME_COLOR, brightness=b / 100)
-#             np.write()
-#             await asyncio.sleep(delay)
-#     fade_out()
-
-# # test
-# if __name__ == "__main__":
-#     asyncio.run(breathe())
-
 import uasyncio as asyncio
 import neopixel
 import random
