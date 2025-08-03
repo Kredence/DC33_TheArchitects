@@ -39,26 +39,3 @@ try:
 except Exception as e:
     FONT_COLOR = "FONT_DARK_ALIEN_GREEN"
     THEME_PALETTE_NAME = "ALIEN_GREEN"
-
-GIF_FOLDER = "/external/animations" # The frames for the gif(s) are stored here
-
-# def _clean(val, default, cast=None):
-#     if val is None:
-#         return default
-#     if cast == float:
-#         try:
-#             return float(val)
-#         except:
-#             return default
-#     if isinstance(val, str):
-#         return val.strip("'\"")
-#     return val
-
-# try:
-#     with open("user_settings.json", "r") as f:
-#         _user_config = json.load(f)
-#         FONT_COLOR = _clean(_user_config.get("FONT_COLOR"), "FONT_DARK_ALIEN_GREEN")
-#         THEME_PALETTE_NAME = _clean(_user_config.get("THEME_PALETTE_NAME"), "ALIEN_GREEN")
-# except Exception as e:
-#     FONT_COLOR = "FONT_DARK_ALIEN_GREEN"
-#     THEME_PALETTE_NAME = "ALIEN_GREEN"

@@ -1,10 +1,6 @@
 import uasyncio as asyncio
 import uselect, sys, os, urandom
-# import sys
-# import os
 import ujson as json
-# import urandom
-# import utime
 from config import DEFAULT_HANDLE
 from fonts import palettes as p
 USER_SETTINGS_FILE = "user_settings.json"
@@ -35,16 +31,15 @@ ASCII_ART = r"""
 >>==================================================================================================<<
 """
 
-# --- Async Helpers ---
+# Global reader for input
+sreader = asyncio.StreamReader(sys.stdin)
 
+# --- Async Helpers ---
 async def async_input(prompt=""):
-    print(prompt, end="")  # no flush() in MicroPython
-    poller = uselect.poll()
-    poller.register(sys.stdin, uselect.POLLIN)
-    while True:
-        if poller.poll(0):
-            return sys.stdin.readline().strip()
-        await asyncio.sleep(0.05)
+    print(prompt, end="")
+    line = await sreader.readline()
+    return line.decode().strip()
+
 
 # --- Display ASCII art with scroll ---
 async def scroll_ascii_art(ascii_art):
@@ -100,7 +95,7 @@ async def set_font_palette():
     try:
         index = int(choice) - 1
         selected = font_keys[index]
-        update_user_settings_field("FONT_COLOR", repr(selected))  # ensure quoted string
+        update_user_settings_field("FONT_COLOR", selected) 
     except Exception as e:
         print("Invalid choice:", e)
 
@@ -113,7 +108,7 @@ async def set_led_palette():
     try:
         index = int(choice) - 1
         selected = led_keys[index]
-        update_user_settings_field("THEME_PALETTE_NAME", repr(selected))  # ensure quoted string
+        update_user_settings_field("THEME_PALETTE_NAME", selected)
     except Exception as e:
         print("Invalid choice:", e)
 
