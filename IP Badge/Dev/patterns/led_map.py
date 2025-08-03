@@ -17,7 +17,7 @@ triangle_right_inner = [38,44,45,54,56]
 
 triangle = (triangle_center_tip + triangle_eye_ring + eye +
                  triangle_left_outter + triangle_left_inner +
-                 triangle_right_inner + triangle_right_outter
+                 triangle_right_inner + triangle_right_outter + skull
 )
 
 sky = left_sky + right_sky

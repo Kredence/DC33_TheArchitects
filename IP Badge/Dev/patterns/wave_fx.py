@@ -133,8 +133,8 @@ async def wave_fx_runner(
 
 if __name__ == "__main__":
     asyncio.run(wave_fx_runner(
-        section="triangle",
-        direction="center-out",
+        section="center_w_bottom",
+        direction="top-to-bottom",
         speed=0.03,
         mirrored=True,
         theme_palette_name="IP_GOLD",
