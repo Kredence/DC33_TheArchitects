@@ -1,61 +1,28 @@
 import uasyncio as asyncio
-import random
-from patterns import handle_display,breathe, twinkle, chase, gif_player
-from patterns.handle_display import run as display_run
-from lib import utils
-# from config import GIF_FOLDER
+# import random
+from patterns import handle_display,breathe, twinkle, chase, gif_player,breathe_fx,twinkle,wave_fx
+# from lib import utils
+from config import FONT_COLOR, THEME_PALETTE_NAME, BRIGHTNESS
 from menu import run_menu
 from patterns.gif_player import run_gif
 
 # Run on boot
 # menu.main() # Gives a time-based menu for the user to set handle - this needs a way to gracefully exit
 
-# Troubleshoot stuff
-# from patterns import led_test
-# led_test.run()
-
-# Displays the users handle
-async def display_loop():
-    while True:
-        try:
-            # print("[Main] Starting display animation")
-            await display_run()
-        except Exception as e:
-            print("[Main] Display task failed:", e)
-
-        delay = random.randint(10, 30)
-        # print(f"[Main] Next display run in {delay} seconds")
-        await asyncio.sleep(delay)
-
-# Sets what light patterns are running
-async def run_lighting_loop():
-    while True:
-        await breathe.breathe(section="all_leds", loop_count=1)
-        await twinkle.twinkle(count=4, section="sky")
-        # await chase.chase(section="sky", direction="reverse")
-
-# async def run_gif_loop():
-#     await gif_player.run(folder=GIF_FOLDER, loop_count=1)
-#     await asyncio.sleep(3)
-    # await gif_player.(folder=GIF_FOLDER, loop_count=3, fade_on_done=True)
-
-async def run_gif_loop():
-    while True:
-        await run_gif()
-        await asyncio.sleep(random.randint(20, 40))
-
-# Troublehsooting
-# async def heartbeat():
-#     while True:
-#         print("Heartbeat: Event loop is alive")
-#         await asyncio.sleep(2)
-
 async def main():
-    await asyncio.gather(
-        display_loop(),
-        run_lighting_loop(),
-        run_menu(),
-        # run_gif_loop()
-    )
+    while True:
+        await handle_display.handle_runner()
+        await asyncio.sleep(0.5)
+        await wave_fx.wave_fx_runner(
+            section="triangle",direction="top-to-bottom",speed=0.03,mirrored=True,
+            theme_palette_name="CYBERPUNK_VIOLET", font_color="FONT_DARK_LETTERS")
+        await asyncio.sleep(0.5)
+        await breathe_fx.breathe(
+            section="center_w_bottom",loop_count=2,simultaneous=5,color_ramp=True,randomize_speed=True,
+            min_brightness=0.1,max_brightness=BRIGHTNESS,easing="sine",led_palette_name=THEME_PALETTE_NAME,font_palette_name=FONT_COLOR)
+        await asyncio.sleep(0.5)
+        await twinkle.twinkle(count=30,speed=0.03,simultaneous=1,section="bottom",randomize_speed=False,color_ramp=False)
+        await asyncio.sleep(0.5)
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
