@@ -121,4 +121,4 @@ async def gif_runner(folder="/external/animations/messwiththebest"):
 
 # --- Test Hook ---
 if __name__ == "__main__":
-    asyncio.run(gif_runner("/external/animations/allyourbases"))
+    asyncio.run(gif_runner("/external/animations/allyourbases1"))

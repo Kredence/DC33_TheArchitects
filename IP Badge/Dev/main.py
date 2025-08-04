@@ -16,7 +16,7 @@ async def main():
         await wave_fx.wave_fx_runner(
             section="center_w_bottom",direction="top-to-bottom",speed=0.03,mirrored=True,
             theme_palette_name=THEME_PALETTE_NAME, font_color=FONT_COLOR)
-        await gif_player.gif_runner(folder="/external/animations/hackers2")
+        await gif_player.gif_runner(folder="/external/animations/hackers")
         await asyncio.sleep(0.5)
         await asyncio.sleep(0.5)
         await chase.chase(
@@ -26,7 +26,7 @@ async def main():
             section="triangle",loop_count=2,simultaneous=5,color_ramp=True,randomize_speed=True,
             min_brightness=0.1,max_brightness=BRIGHTNESS,easing="sine",led_palette_name="NEON_BLUE_TEAL",font_palette_name="FONT_NEON_BLUE_TEAL")
         await asyncio.sleep(0.5)
-        await gif_player.gif_runner(folder="/external/animations/hackers1")
+        await gif_player.gif_runner(folder="/external/animations/allyourbases")
         await asyncio.sleep(0.5)
         await twinkle.twinkle(count=30,speed=0.03,simultaneous=1,section="bottom",randomize_speed=False,color_ramp=False)
         await asyncio.sleep(0.5)
