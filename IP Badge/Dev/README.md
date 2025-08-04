@@ -1,6 +1,6 @@
 # IP Badge (Work in Progress)
 
-This repository contains firmware for a custom RP2040-Zero badge designed for conferences and interactive events. It features a 286x78 ST7789P3 display, 83 WS2812B LEDs, external W25Q flash, and APS6406L PSRAM. The firmware is written in MicroPython with modular support for display and lighting patterns because I yearn for pain.
+This repository contains firmware for a custom RP2040-Zero badge designed for conferences and interactive events. It features a 286x78 ST7789P3 display, 83 WS2812B LEDs, external W25Q flash, and ~APS6406L PSRAM~ (did not make it into production). The firmware is written in MicroPython with modular support for display and lighting patterns because I yearn for pain.
 
 ---
 
@@ -42,13 +42,14 @@ You can upload all firmware files from the `/Dev` folder using either:
 
    <img width="482" height="250" alt="image" src="https://github.com/user-attachments/assets/7f62ee23-511c-4545-8fb1-d48c4edb95df" />
 3. Clone this repo by downloading it as a .zip and extract the files or use `git clone`
-4. Open the `/Dev` project folder **if you upload the whole IP/Dev folder, the badge won't boot**
-5. Select `Initialize MicroPico Project` from the MicroPico menu (CTRL+Shift+P to open the command palette)
-6. Use the “Upload All Files” or “Sync Folder” command to copy the contents of `Dev/` to the badge.
+   [GitHub Repository Extension](https://learn.microsoft.com/en-us/azure/developer/javascript/how-to/with-visual-studio-code/clone-github-repository?tabs=activity-bar)
+5. Open the `/Dev` project folder **if you upload the whole IP/Dev folder, the badge won't boot**
+6. Select `Initialize MicroPico Project` from the MicroPico menu (CTRL+Shift+P to open the command palette)
+7. Use the “Upload All Files” or “Sync Folder” command to copy the contents of `Dev/` to the badge.
 
 ### Option B: Thonny IDE
 
-1. Open Thonny and configure the interpreter:
+1. Open [Thonny](https://thonny.org/) and configure the interpreter:
    - `Tools → Options → Interpreter → MicroPython (Raspberry Pi Pico) COMX`
 2. Clone this repo by downloading it as a .zip and extract the files or use `git clone`
 3. Open the `Dev/` folder in Thonny.
