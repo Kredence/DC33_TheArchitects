@@ -56,7 +56,8 @@ from menu import run_menu
 #         await asyncio.sleep(4.5)
 
 async def main():
-    await white_hold.run_white_hold()
+    while True:
+        await white_hold.run_white_hold()
 
 if __name__ == "__main__":
     asyncio.run(main())

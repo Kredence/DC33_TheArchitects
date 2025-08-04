@@ -58,7 +58,7 @@ async def run_white_hold():
     await fade_display_on()
 
     display.fill(display.color(255, 255, 255))
-    await asyncio.sleep(10)
+    await asyncio.sleep(60)
 
     await fade_display_off()
     clear_leds()
