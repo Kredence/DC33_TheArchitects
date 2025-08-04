@@ -28,4 +28,4 @@ beam_w_triangle = (center_beam + triangle)
 full = left_sky + right_sky + eye + skull + bottom + triangle
 
 # All LEDs
-all_leds = list(range(83))
+all_leds = list(range(90))
