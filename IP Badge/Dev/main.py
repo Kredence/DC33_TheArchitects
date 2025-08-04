@@ -1,5 +1,5 @@
 import uasyncio as asyncio
-from patterns import handle_display, twinkle, gif_player, breathe_fx, twinkle, wave_fx, chase, matrix_rain
+from patterns import handle_display, twinkle, gif_player, breathe_fx, twinkle, wave_fx, chase, matrix_rain, glitch_fx
 from config import FONT_COLOR, THEME_PALETTE_NAME, BRIGHTNESS
 from menu import run_menu
 # from patterns.gif_player import run_gif
@@ -16,8 +16,9 @@ async def main():
         await wave_fx.wave_fx_runner(
             section="center_w_bottom",direction="top-to-bottom",speed=0.03,mirrored=True,
             theme_palette_name=THEME_PALETTE_NAME, font_color=FONT_COLOR)
-        await gif_player.gif_runner(folder="/external/animations/hackers")
+        await gif_player.gif_runner(folder="/external/animations/messwiththebest")
         await asyncio.sleep(0.5)
+        await glitch_fx.glitch_sequence(section="bottom", style="wipe")
         await asyncio.sleep(0.5)
         await chase.chase(
             delay=0.01,simultaneous=4,section="sky",direction="bounce",loop_count=2,dual_head=True,color_ramp=True,randomize_speed=False)
@@ -29,6 +30,8 @@ async def main():
         await twinkle.twinkle(count=30,speed=0.03,simultaneous=1,section="bottom",randomize_speed=False,color_ramp=False)
         await asyncio.sleep(0.5)
         await matrix_rain.matrix_rain(section="center_beam")
+        await asyncio.sleep(0.5)
+        await glitch_fx.glitch_sequence(section="center_beam", style="wipe")
         await asyncio.sleep(0.5)
         await chase.chase(
             delay=0.01,simultaneous=2,section="center_beam",direction="forward",loop_count=2,dual_head=True,color_ramp=True,randomize_speed=False)
@@ -42,8 +45,11 @@ async def main():
         await asyncio.sleep(0.5)
         await gif_player.gif_runner(folder="/external/animations/allyourbases")
         await asyncio.sleep(0.5)
+        await twinkle.twinkle(count=30,speed=0.03,simultaneous=1,section="all_leds",randomize_speed=False,color_ramp=False)
+        await asyncio.sleep(0.5)
         await chase.chase(
-            delay=0.01,simultaneous=4,section="center_beam",direction="reverse",loop_count=2,dual_head=True,color_ramp=True,randomize_speed=False)
+            delay=0.01,simultaneous=7,section="beam_w_triangle",direction="bounce",loop_count=2,dual_head=True,color_ramp=True,randomize_speed=False)
+        await asyncio.sleep(0.5)
 
 if __name__ == "__main__":
     asyncio.run(main())

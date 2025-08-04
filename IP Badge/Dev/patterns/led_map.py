@@ -24,6 +24,7 @@ sky = left_sky + right_sky
 center_beam = (beam + triangle_center_tip + triangle_eye_ring + 
                triangle_left_inner + triangle_right_inner)
 center_w_bottom = center_beam + bottom
+beam_w_triangle = (center_beam + triangle)
 full = left_sky + right_sky + eye + skull + bottom + triangle
 
 # All LEDs
