@@ -1,4 +1,4 @@
-# Check if Python is installed
+,# Check if Python is installed
 $python = Get-Command python -ErrorAction SilentlyContinue
 if (-not $python) {
     Write-Host "Python is NOT installed."

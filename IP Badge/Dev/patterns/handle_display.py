@@ -45,7 +45,7 @@ def random_font_color():
     r, g, b = random.choice(FONT_PALETTE)
     return display.color(r, g, b)
 
-def get_handle(force_default_chance=0.25):
+def get_handle(force_default_chance=0.05):
     if random.random() < force_default_chance:
         return DEFAULT_HANDLE
     try:
