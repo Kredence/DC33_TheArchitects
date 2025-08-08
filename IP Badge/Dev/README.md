@@ -60,6 +60,16 @@ You can upload all firmware files from the `/Dev` folder using either:
 
 ---
 
+## I Want to Change Stuff
+
+If you've got a working badge, you can simply connect to it via USB and use the onboard menu to set/change your handle, text font color, LED color patterns, and/or LED brightness. 
+
+Using PuTTY, MPRemote, RShell, or another tool like MobaXterm, you can open a serial connection to the board and power the badge on. This should display a menu with options to change settings and then to reset the board for the changes to take effect. 
+
+A known issue is that the menu option you select isn't echo'd back to you (working on a fix for that).
+
+---
+
 ## Configuration Settings
 
 Key settings are stored in `config.py` and `settings.json`:

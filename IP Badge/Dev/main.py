@@ -42,6 +42,7 @@ async def main():
         await chase.chase(
             delay=0.01,simultaneous=4,section="sky",direction="reverse",loop_count=2,dual_head=False,color_ramp=True,randomize_speed=False)
         await asyncio.sleep(1)
+        await handle_display.handle_runner()
         await gif_player.gif_runner(folder="/external/animations/allyourbases")
         await asyncio.sleep(1)
         await twinkle.twinkle(count=30,speed=0.03,simultaneous=1,section="all_leds",randomize_speed=False,color_ramp=False)

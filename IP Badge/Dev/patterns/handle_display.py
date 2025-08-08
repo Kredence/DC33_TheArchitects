@@ -1,6 +1,6 @@
 import time, json, random, math
 import uasyncio as asyncio
-from config import DEFAULT_HANDLE, SETTINGS_FILE, SCREEN_WIDTH, SCREEN_HEIGHT, BL_BRIGHTNESS, FONT_COLOR
+from config import DEFAULT_HANDLE, SETTINGS_FILE, SCREEN_WIDTH, SCREEN_HEIGHT, BL_BRIGHTNESS, FONT_COLOR, THEME_PALETTE_NAME
 from fonts.palettes import PALETTES
 from lib.display import init_display  # Import initializer
 
@@ -45,7 +45,7 @@ def random_font_color():
     r, g, b = random.choice(FONT_PALETTE)
     return display.color(r, g, b)
 
-def get_handle(force_default_chance=0.05):
+def get_handle(force_default_chance=0.01):
     if random.random() < force_default_chance:
         return DEFAULT_HANDLE
     try:
