@@ -22,7 +22,7 @@ async def main():
         await asyncio.sleep(1)
         await breathe_fx.breathe(
             section="triangle",loop_count=2,simultaneous=5,color_ramp=True,randomize_speed=True,
-            min_brightness=0.1,max_brightness=BRIGHTNESS,easing="sine",led_palette_name="NEON_BLUE_TEAL",font_palette_name="FONT_GHOST_GLITCH")
+            min_brightness=0.1,max_brightness=BRIGHTNESS,easing="sine",led_palette_name=THEME_PALETTE_NAME,font_palette_name=FONT_COLOR)
         await asyncio.sleep(1)
         await twinkle.twinkle(count=30,speed=0.03,simultaneous=1,section="bottom",randomize_speed=False,color_ramp=False)
         await asyncio.sleep(1)
