@@ -1,45 +1,59 @@
-import time, json, random, math
+import time, json, random, math, neopixel
+from machine import Pin
 import uasyncio as asyncio
-from config import DEFAULT_HANDLE, SETTINGS_FILE, SCREEN_WIDTH, SCREEN_HEIGHT, BL_BRIGHTNESS, FONT_COLOR, THEME_PALETTE_NAME
+from config import BRIGHTNESS, THEME_PALETTE_NAME, LED_PIN, LED_COUNT, FONT_COLOR, DEFAULT_HANDLE, SETTINGS_FILE, SCREEN_WIDTH, SCREEN_HEIGHT, BL_BRIGHTNESS
 from fonts.palettes import PALETTES
+from patterns.led_map import all_leds
+
 from lib.display import init_display  # Import initializer
 
 # Globals
 display = None
 FONT_PALETTE = PALETTES.get(FONT_COLOR, PALETTES[FONT_COLOR])
 
-################################################ TEST below
-
-from config import BRIGHTNESS, THEME_PALETTE_NAME, LED_PIN, LED_COUNT
-from fonts.palettes import PALETTES
-from machine import Pin
-import neopixel
-from patterns.led_map import all_leds
-
 np = neopixel.NeoPixel(Pin(LED_PIN), LED_COUNT)
 LED_PALETTE = PALETTES.get(THEME_PALETTE_NAME, [(255, 251, 0)])
 
+#********************************
+def set_pixel_grb(i, color, brightness=BRIGHTNESS):
+    # color is (R,G,B) from palette; strip is GRB
+    r, g, b = color
+    np[i] = (int(g * brightness), int(r * brightness), int(b * brightness))
+
+def scale_pixel_grb(i, factor):
+    # read GRB, scale, write GRB
+    g, r, b = np[i]
+    np[i] = (int(g * factor), int(r * factor), int(b * factor))
+
 def flash_glitch_leds(simultaneous=8):
-    np.fill((0, 0, 0))  # Clear everything first
+    np.fill((0, 0, 0))
     for _ in range(simultaneous):
         i = random.choice(all_leds)
-        r, g, b = random.choice(LED_PALETTE)
-        np[i] = (int(r * BRIGHTNESS), int(g * BRIGHTNESS), int(b * BRIGHTNESS))
+        color = random.choice(LED_PALETTE)
+        set_pixel_grb(i, color)
     np.write()
 
 async def fade_leds_out(steps=5, delay=0.02):
     for step in reversed(range(steps + 1)):
+        factor = step / steps
         for i in range(LED_COUNT):
-            r, g, b = np[i]
-            np[i] = (
-                int(r * step / steps),
-                int(g * step / steps),
-                int(b * step / steps)
-            )
+            scale_pixel_grb(i, factor)
         np.write()
         await asyncio.sleep(delay)
 
-################################################ TEST ^
+async def flash_and_fade_glitch_leds(simultaneous=8, steps=3, delay=0.01):
+    for _ in range(simultaneous):
+        i = random.choice(all_leds)
+        color = random.choice(LED_PALETTE)
+        set_pixel_grb(i, color)
+    np.write()
+
+    for s in reversed(range(1, steps)):
+        factor = s / steps
+        for i in range(LED_COUNT):
+            scale_pixel_grb(i, factor)
+        np.write()
+        await asyncio.sleep(delay)
 
 def random_font_color():
     r, g, b = random.choice(FONT_PALETTE)
@@ -208,21 +222,6 @@ async def wave_distortion_async(duration=2):
                 )
 
         await asyncio.sleep(0.04)
-
-async def flash_and_fade_glitch_leds(simultaneous=8, steps=3, delay=0.01):
-    for _ in range(simultaneous):
-        i = random.choice(all_leds)
-        r, g, b = random.choice(LED_PALETTE)
-        np[i] = (int(r * BRIGHTNESS), int(g * BRIGHTNESS), int(b * BRIGHTNESS))
-    np.write()
-
-    # Rapid fade
-    for s in reversed(range(1, steps)):
-        for i in range(LED_COUNT):
-            r, g, b = np[i]
-            np[i] = (int(r * s / steps), int(g * s / steps), int(b * s / steps))
-        np.write()
-        await asyncio.sleep(delay)
 
 async def color_scanline_flicker_async(duration=0.5, palette=None, min_delay=0.005, max_delay=0.03):
     """
