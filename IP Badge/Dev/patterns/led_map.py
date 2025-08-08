@@ -1,8 +1,8 @@
 # Not 100% sure this is accurate but I'm tired, numbering starts a zero
 # Individual sections
 left_sky = [0, 1, 2, 3, 4, 5, 6] # AKA left glitch
-right_sky = [60, 61, 62, 63, 64, 65, 66, 67] # AKA right glitch
-bottom = [68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82]
+right_sky = [60, 61, 62, 63, 64, 65, 66] # AKA right glitch
+bottom = [67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82]
 beam = [7, 8, 9, 10, 11, 12] # This is from the UFO to the top of the pyramid
 eye = [27,28,29]
 skull = [53]

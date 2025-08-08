@@ -11,7 +11,7 @@ async def main():
         await handle_display.handle_runner()
         await asyncio.sleep(1)
         await wave_fx.wave_fx_runner(
-            section="center_w_bottom",direction="top-to-bottom",speed=0.03,mirrored=True,
+            section="all_leds",direction="top-to-bottom",speed=0.03,mirrored=True,
             theme_palette_name=THEME_PALETTE_NAME, font_color=FONT_COLOR)
         await gif_player.gif_runner(folder="/external/animations/messwiththebest")
         await asyncio.sleep(1)
