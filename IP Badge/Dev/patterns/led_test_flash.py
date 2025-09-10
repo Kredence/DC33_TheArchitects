@@ -9,7 +9,7 @@ import patterns.led_map as led_map
 from fonts.palettes import PALETTES
 
 # Customize your section names here
-selected_section_names = ["eye","skull"]  # <- Update this list as needed
+selected_section_names = ["illuminati_letters","party_letters"]  # <- Update this list as needed
 
 use_random_colors = False  # Set to True to randomize color per section
 repeat_count = 3  # How many times to run the full cycle

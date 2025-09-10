@@ -28,5 +28,9 @@ center_w_bottom = center_beam + bottom
 beam_w_triangle = (center_beam + triangle)
 full = left_sky + right_sky + eye + skull + bottom + triangle
 
+# Letters at the bottom
+illuminati_letters = [68, 69, 70, 71, 72, 73, 74, 75, 76, 77]
+party_letters = [78, 79, 80, 81, 82]
+
 # All LEDs
 all_leds = list(range(83))

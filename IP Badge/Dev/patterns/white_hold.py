@@ -41,7 +41,7 @@ def scale_color(color, brightness):
     return (int(r * brightness), int(g * brightness), int(b * brightness))
 
 def set_leds_white():
-    white = scale_color((255, 255, 255), WHITE_BRIGHTNESS)
+    white = scale_color((200, 0, 40), WHITE_BRIGHTNESS)
     for i in all_leds:
         # Output in GRB order
         np[i] = (white[1], white[0], white[2])

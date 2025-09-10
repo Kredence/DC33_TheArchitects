@@ -34,13 +34,6 @@ ASCII_ART = r"""
 # Global reader for input
 sreader = asyncio.StreamReader(sys.stdin)
 
-# BRIGHTNESS_PRESETS = {
-#     "1": ("Default", 0.3),
-#     "2": ("Brighter but not terrible", 0.5),
-#     "3": ("Might need sunglasses", 0.7),
-#     "4": ("MY EYES!", 1.0),
-# }
-
 BRIGHTNESS_PRESETS = [
     ("Default", 0.3),
     ("Brighter but not terrible", 0.5),
@@ -79,9 +72,26 @@ async def set_hacker_handle():
     with open(HANDLE_FILE, "w") as f:
         json.dump({"handle": handle}, f)
     print("\nHandle changed to:", handle)
+    show_current_settings()
     return handle
 
 # --- Config Updaters ---
+
+# This echos back the config change
+def show_current_settings():
+    try:
+        if USER_SETTINGS_FILE in os.listdir():
+            with open(USER_SETTINGS_FILE, "r") as f:
+                settings = json.load(f)
+            print("\n--- Current Settings ---")
+            for k, v in settings.items():
+                print(f"{k}: {v}")
+            print("------------------------")
+        else:
+            print("\nNo user_settings.json yet.")
+    except Exception as e:
+        print("Error reading current settings:", e)
+
 # Trying to update the user
 def update_user_settings_field(field, value):
     try:
@@ -96,34 +106,42 @@ def update_user_settings_field(field, value):
             json.dump(settings, f)
 
         print(f"{field} updated to {value}")
+        show_current_settings()
     except Exception as e:
         print("Error updating user_settings.json:", e)
 
-async def set_font_palette():
-    font_keys = [k for k in dir(p) if k.startswith("FONT_")]
-    print("\nAvailable font palettes:")
-    for i, k in enumerate(font_keys):
-        print(f"{i+1}. {k}")
+# Adding this so that the options for palettes only picks the values and not PALETTE as a bug fix
+async def pick_from_list(title, options):
+    if not options:
+        print(f"\n{title}: none found.")
+        return None
+    print(f"\n{title}:")
+    for i, k in enumerate(options, 1):
+        print(f"{i}. {k}")
     choice = await async_input("Select number: ")
     try:
-        index = int(choice) - 1
-        selected = font_keys[index]
-        update_user_settings_field("FONT_COLOR", selected) 
-    except Exception as e:
-        print("Invalid choice:", e)
+        idx = int(choice) - 1
+        if 0 <= idx < len(options):
+            return options[idx]
+    except:
+        pass
+    print("Invalid choice.")
+    return None
 
+# Font palette picker (uses only FONT_* entries from the dict)
+async def set_font_palette():
+    # Iterate over the dict keys, not module globals
+    font_keys = sorted([k for k in p.PALETTES.keys() if k.startswith("FONT_")])
+    selected = await pick_from_list("Available font palettes", font_keys)
+    if selected:
+        update_user_settings_field("FONT_COLOR", selected)
+
+# LED palette picker (filters out FONT_* entries)
 async def set_led_palette():
-    led_keys = [k for k in dir(p) if not k.startswith("FONT_") and not k.startswith("__")]
-    print("\nAvailable LED palettes:")
-    for i, k in enumerate(led_keys):
-        print(f"{i+1}. {k}")
-    choice = await async_input("Select number: ")
-    try:
-        index = int(choice) - 1
-        selected = led_keys[index]
+    led_keys = sorted([k for k in p.PALETTES.keys() if not k.startswith("FONT_")])
+    selected = await pick_from_list("Available LED palettes", led_keys)
+    if selected:
         update_user_settings_field("THEME_PALETTE_NAME", selected)
-    except Exception as e:
-        print("Invalid choice:", e)
 
 async def set_brightness():
     print("\nChoose a brightness level:")
